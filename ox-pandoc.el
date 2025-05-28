@@ -62,7 +62,7 @@
     reference-location resource-path section-divs self-contained
     slide-level standalone strip-comments syntax-definition tab-stop
     table-of-contents template title-prefix toc top-level-division
-    toc-depth trace track-changes variable verbose version webtex wrap))
+    toc-depth trace track-changes variable verbose version webtex wrap figure-caption-position table-caption-position))
 
 (defconst org-pandoc-colon-separated-options
   '(abbreviations css include-in-header include-before-body
