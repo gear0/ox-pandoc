@@ -48,32 +48,35 @@
 
 (defconst org-pandoc-valid-options
   '(abbreviations ascii atx-headers base-header-level bash-completion
-    biblatex bibliography citation-abbreviations columns csl css
-    data-dir default-image-extension dpi dump-args email-obfuscation eol
-    epub-chapter-level epub-cover-image epub-embed-font epub-metadata
-    epub-subdirectory extract-media fail-if-warnings file-scope filter
-    highlight-style html-q-tags id-prefix ignore-args include-after-body
-    include-before-body include-in-header incremental
-    indented-code-classes katex list-extensions list-highlight-languages
-    list-highlight-styles listings log lua-filter mathjax mathml
-    metadata natbib no-highlight number-offset number-sections
-    pdf-engine-opt pdf-engine preserve-tabs print-default-data-file
-    print-default-template quiet reference-doc reference-links
-    reference-location resource-path section-divs self-contained
-    slide-level standalone strip-comments syntax-definition tab-stop
-    table-of-contents template title-prefix toc top-level-division
-    toc-depth trace track-changes variable verbose version webtex wrap figure-caption-position table-caption-position))
+                  biblatex bibliography citation-abbreviations columns csl css
+                  data-dir default-image-extension dpi dump-args email-obfuscation eol
+                  epub-chapter-level epub-cover-image epub-embed-font epub-metadata
+                  epub-subdirectory extract-media fail-if-warnings file-scope filter
+                  highlight-style html-q-tags id-prefix ignore-args include-after-body
+                  include-before-body include-in-header incremental
+                  indented-code-classes katex list-extensions list-highlight-languages
+                  list-highlight-styles listings log lua-filter mathjax mathml
+                  metadata natbib no-highlight number-offset number-sections
+                  pdf-engine-opt pdf-engine preserve-tabs print-default-data-file
+                  print-default-template quiet reference-doc reference-links
+                  reference-location resource-path section-divs self-contained
+                  slide-level standalone strip-comments syntax-definition tab-stop
+                  table-of-contents template title-prefix toc top-level-division
+                  toc-depth trace track-changes variable verbose version webtex wrap
+                  figure-caption-position table-caption-position list-of-figures
+                  list-of-tables variable-json sandbox request-header
+                  no-check-certificate))
 
 (defconst org-pandoc-colon-separated-options
   '(abbreviations css include-in-header include-before-body
-    include-after-body pdf-engine-opt epub-embed-font bibliography
-    filter lua-filter))
+                  include-after-body pdf-engine-opt epub-embed-font bibliography
+                  filter lua-filter))
 
 (defconst org-pandoc-file-options
   '(abbreviations bibliography citation-abbreviations csl
-    epub-cover-image epub-embed-font epub-metadata include-after-body
-    include-before-body include-in-header log print-default-data-file
-    reference-doc syntax-definition template ))
+                  epub-cover-image epub-embed-font epub-metadata include-after-body
+                  include-before-body include-in-header log print-default-data-file
+                  reference-doc syntax-definition template ))
 
 (defconst org-pandoc-extensions
   '((asciidoc . txt) (beamer . tex)
@@ -1695,7 +1698,7 @@ Option table is created in this stage."
                      (org-export-get-all-transcoders 'org)))))
     (if org-template
         (funcall org-template contents info)
-    contents)))
+      contents)))
 
 (defun org-pandoc-paragraph (paragraph contents info)
   "Transcode a PARAGRAPH element from Org to Pandoc.
@@ -1861,8 +1864,8 @@ OPTIONS is a hashtable.  It runs asynchronously."
   (if (not (executable-find org-pandoc-command))
       (display-warning 'ox-pandoc "Pandoc command is not installed.")
     (let ((version (with-temp-buffer
-                    (call-process org-pandoc-command nil t nil "-v")
-                    (buffer-string))))
+                     (call-process org-pandoc-command nil t nil "-v")
+                     (buffer-string))))
       (if (not (string-match "^pandoc.*? \\([0-9]+\\)\\.\\([0-9]+\\)" version))
           (display-warning 'ox-pandoc "Pandoc version number can not be retrieved.")
         (let ((major (string-to-number (match-string 1 version)))
