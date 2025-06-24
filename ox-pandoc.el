@@ -7,6 +7,7 @@
 ;; Author: KAWABATA, Taichi <kawabata.taichi@gmail.com>
 ;; Created: 2014-07-20
 ;; Version: 1.180510
+;; Package-Version: 20250602.210710
 ;; Package-Requires: ((org "8.2") (emacs "24") (dash "2.8") (ht "2.0") (cl-lib "0.5"))
 ;; Keywords: tools
 ;; URL: https://github.com/kawabata/ox-pandoc
@@ -89,7 +90,7 @@
     (markdown_strict . md) (native . hs)
     (opendocument . xml) (plain . txt) (revealjs . html) (s5 . html)
     (slideous . html) (slidy . html) (texinfo . texi)
-    (zimwiki . zim)))
+    (zimwiki . zim)(jira . jira)))
 
 (defconst org-pandoc-option-type
   `(choice (const t) (const nil)
@@ -181,6 +182,8 @@ set as `(markdown_strict+footnotes)'."
     ;;(?j "to json." org-pandoc-export-to-json)
     (?j "to json and open." org-pandoc-export-to-json-and-open)
     (?J "as json." org-pandoc-export-as-json)
+    (?u "to jira." org-pandoc-export-to-jira)
+    (?U "as jira." org-pandoc-export-as-jira)
     ;;(?k "to markdown." org-pandoc-export-to-markdown)
     ;;(?k "to markdown and open." org-pandoc-export-to-markdown-and-open)
     ;;(?K "as markdown." org-pandoc-export-as-markdown)
@@ -308,6 +311,7 @@ set as `(markdown_strict+footnotes)'."
   "Hook called after processing beamer."
   :group 'org-pandoc
   :type 'hook)
+
 
 ;;;###autoload
 (defun org-pandoc-export-to-beamer (&optional a s v b e)
@@ -763,6 +767,27 @@ set as `(markdown_strict+footnotes)'."
 (defun org-pandoc-export-as-json (&optional a s v b e)
   "Export as json."
   (interactive) (org-pandoc-export 'json a s v b e t))
+
+
+;;;###autoload
+(defun org-pandoc-export-to-jira (&optional a s v b e)
+  "Export to jira."
+  (interactive) (org-pandoc-export 'jira a s v b e))
+
+;;;###autoload
+(defun org-pandoc-export-as-jira (&optional a s v b e)
+  "Export as jira."
+  (interactive) (org-pandoc-export 'jira a s v b e t))
+
+(defcustom org-pandoc-options-for-jira nil
+  "Pandoc options for jira."
+  :group 'org-pandoc
+  :type org-pandoc-option-type)
+
+(defcustom org-pandoc-after-processing-jira-hook nil
+  "Hook called after processing jira."
+  :group 'org-pandoc
+  :type 'hook)
 
 (defcustom org-pandoc-options-for-latex nil
   "Pandoc options for latex."
@@ -1881,7 +1906,3 @@ OPTIONS is a hashtable.  It runs asynchronously."
 (provide 'ox-pandoc)
 
 ;;; ox-pandoc.el ends here
-
-;; Local Variables:
-;; time-stamp-pattern: "10/Version:\\\\?[ \t]+1.%02y%02m%02d\\\\?\n"
-;; End:
